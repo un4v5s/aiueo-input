@@ -5,9 +5,9 @@ This app was created to facilitate communication for Japanese speakers who have 
 
 By identifying the vowels from the shape of the mouth obtained from the image of the in-camera of tablet terminal and inputting the consonants on the touch panel, you can make the Japanese syllabary speak on your behalf.
 
-## Status
+## Development Status
 
-In Progress
+In Progress (20221216)
 
 ## Issues I am working on
 
