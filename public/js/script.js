@@ -55,7 +55,7 @@ async function onPlay() {
 }
 
 async function start() {
-  console.log("run()");
+  console.log("start()");
   stopFlag = false;
 
   toggleStopBtnSpinner(true);
@@ -130,20 +130,17 @@ async function stop() {
 }
 
 window.addEventListener("load", () => {
+  // programmatically add video and canvas element
   const video = document.createElement("video"); 
   video.setAttribute('id', 'inputVideo');
   video.setAttribute('autoplay', 'muted');
   document.getElementById("video-wrapper").appendChild(video);
-  // document.getElementById("inputVideo").style.display = "none";
-  // video.style.display = "none";
 
   const canvas = document.createElement("canvas"); 
   canvas.setAttribute('id', 'overlay');
   document.getElementById("video-wrapper").appendChild(canvas);
-  // document.getElementById("inputVideo").style.display = "none";
-  // canvas.style.display = "none";
-  // initFaceDetectionControls();
-  // run();
+
+  // add swipe events
   setSwipe();
 });
 
@@ -247,9 +244,10 @@ function detectVowel(resizedResult){
 
   if(currentVowel!=resultVowelJp){
     changeKeyTop(resultVowel);
-    document.getElementById(`char-${resultVowel}`).checked = true
+    // document.getElementById(`char-${resultVowel}`).checked = true
+    document.getElementById(`char-${resultVowel}`).click();
     // document.getElementById("result").value = resultVowel;
-    document.getElementById("result-top").innerText = resultVowelJp;
+    // document.getElementById("result-top").innerText = resultVowelJp;
   }
 
   // old 20221210 16:35
@@ -301,15 +299,42 @@ function detectVowel(resizedResult){
   // })
 }
 
+let sensitivity;
+window.addEventListener("load", () => {
+  // get or set sensitivity from localStorage
+  const sensitivityElm = document.getElementById("swipe-sensitivity");
+  sensitivityElm.addEventListener("change", (evt) => {
+    localStorage.setItem('sensitivity', evt.target.value);
+    sensitivity = evt.target.value;
+  })
+  const lsSensitivity = localStorage.getItem("sensitivity");
+  if(lsSensitivity==null){
+    localStorage.setItem("sensitivity", "50");
+    lsSensitivity = 50;
+  }
+  sensitivityElm.value = lsSensitivity;
+  sensitivity = lsSensitivity;
+
+  // add reset button event
+  const resetSensitivityBtn = document.getElementById("reset-sensitivity-btn");
+  resetSensitivityBtn.addEventListener("click", () => {
+    localStorage.setItem('sensitivity', "50");
+    sensitivityElm.value = 50;
+    sensitivity = 50;
+  })
+})
+
 // change current vowel with swipe
 function setSwipe() {
+  // let t = document.querySelector(".swipearea-overlay");
   let t = document.querySelector(".swipearea-overlay");
   // console.log("t: ", t);
   let aiueo = "a i u e o".split(" ");
   let startX, startY;		// タッチ開始 x, y座標
   let moveX, moveY;	// スワイプ中の x, y座標
   let tmpCurrentVowel = '', tmpIdx;
-  const sensitivity = 50; // スワイプを感知する最低距離（ピクセル単位）
+  sensitivity = document.getElementById("swipe-sensitivity").value; // default 50 スワイプを感知する最低距離（ピクセル単位）
+  // console.log("sensitivity: ", sensitivity);
   
   ///// マウス
   // タッチ開始時： xy座標を取得
@@ -328,7 +353,7 @@ function setSwipe() {
       n.preventDefault();
       moveX = n.pageX;
       moveY = n.pageY;
-      onMove(moveX, startX);
+      onMove(moveX, startX, "mouse");
     }
   });
   
@@ -343,7 +368,7 @@ function setSwipe() {
     e.preventDefault();
     startX = e.touches[0].pageX;
     startY = e.touches[0].pageY;
-    tmpCurrentVowel = document.getElementById("result-top").innerText;
+    tmpCurrentVowel = document.querySelector('input[name="currentVowel"]:checked').value;
     tmpIdx = aiueo.indexOf(tmpCurrentVowel);
 
     // スワイプ中： xy座標を取得
@@ -351,7 +376,7 @@ function setSwipe() {
       n.preventDefault();
       moveX = n.changedTouches[0].pageX;
       moveY = n.changedTouches[0].pageY;
-      onMove(moveX, startX);
+      onMove(moveX, startX, "touch");
     }
   });
   
@@ -360,14 +385,15 @@ function setSwipe() {
     t.ontouchmove = null;
   });
 
-  function onMove(moveX, startX){
+  function onMove(moveX, startX, type){
     const dist = moveX - startX;
     const distNum = Math.floor(dist / sensitivity);
     const newIdx = Math.min(Math.max(tmpIdx + distNum, 0), 4); // min 0 to max 5
     const currentCheckedVowel = document.querySelector('input[name="currentVowel"]:checked').value;
     const currentIdx = aiueo.indexOf(currentCheckedVowel);
     if(newIdx!=currentIdx){
-      console.log("currentVowel change")
+      console.log("type: ", type);
+      // console.log("currentVowel change")
       document.querySelectorAll(".char")[newIdx].click();
     }
   };

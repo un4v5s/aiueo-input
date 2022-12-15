@@ -12,6 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" crossorigin="anonymous"></script>
   <script src="/js/script.js" crossorigin="anonymous"></script>
   <script src="/js/charChanger.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width">
 </head>
 
 <body>
@@ -45,7 +46,7 @@
   </div>
 
   <div class="current-vowel-wrapper">
-    <div id="result-top" class="hidden">a</div>
+    <!-- <div id="result-top" class="hidden">a</div> -->
     <input name="currentVowel" type="radio" id="char-a" class="char" value="a" checked>
     <label for="char-a">A</label>
     <input name="currentVowel" type="radio" id="char-i" class="char" value="i">
@@ -323,12 +324,14 @@
       <!-- <label>outerLipsRhombus:</label><input id="outerLipsRhombus" style="font-size: 15px;"> -->
       <label>outerLipsRhombusWithRatio:</label>
       <input id="outerLipsRhombusWithRatio" style="font-size: 15px;">
-      <form action="#">
-        <p class="range-field">
-          <input type="range" id="test5" min="10" max="200" />
-        </p>
-      </form>
+      <label>swipeSensitivity:
+        <a id="reset-sensitivity-btn" href="javascript:void(0);">Reset</a>
 
+      </label>
+      <p class="range-field">
+        
+        <input type="range" id="swipe-sensitivity" min="10" max="200" step="10"/>
+      </p>
     </div>
 
 </body>

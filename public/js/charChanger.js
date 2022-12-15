@@ -90,20 +90,22 @@ const dic_en = {
 
 let buttons;
 window.addEventListener("load", () => {
-  const currentCharacter = document.querySelectorAll('input[type=radio][name="currentChar"]');
-  function changeHandler(event) {
-    console.log("event.target.value: ", event.target.value);
-    changeKeyTop(event.target.value);
-  }
-  Array.prototype.forEach.call(currentCharacter, function(radio) {
-    radio.addEventListener('change', changeHandler);
+  // get current vowels elements and set eventlistener
+  const currentVowels = document.querySelectorAll('input[type=radio][name="currentVowel"]');
+  Array.prototype.forEach.call(currentVowels, function(radio) {
+    radio.addEventListener('change', (event) => {
+      // console.log("event.target.value: ", event.target.value);
+      changeKeyTop(event.target.value);
+    });
   });
 
+  // get akstn buttons and set event
   buttons = document.querySelectorAll(".flex.consonants button");
   buttons.forEach((e) => {
     handleClickEvent(e);
   });
 
+  // set key top to default
   changeKeyTop('a');
 });
 
@@ -113,7 +115,8 @@ function playSound(fileName, playbackRate = 0) {
   if(playbackRate){
     audio.playbackRate = playbackRate;
   }
-  audio.play();
+  // audio.play();
+  audio.cloneNode().play();  
 }
 
 function changeKeyTop(detectedVowel) {
@@ -146,13 +149,10 @@ function changeKeyTop(detectedVowel) {
 function handleClickEvent(target) {
   let pressTimer, flag = true, pressTime = 500;
 
-  $(target).mouseup(function(){
-    console.log("short click");
-    clearTimeout(pressTimer);
-    if(flag) playSound(target.getAttribute('char'));
-    return false;
-
-  }).mousedown(function(){
+  // not working with addEventlistener
+  // not working with $(target).touchend()
+  $(target).on('touchstart', () => {
+    console.log("touchstart");
     clearTimeout(pressTimer);
     flag=true;
     pressTimer = window.setTimeout(function() {
@@ -161,5 +161,36 @@ function handleClickEvent(target) {
       flag=false;
     }, pressTime);
     return false; 
-  });
+  }).on('touchend', () => {
+    console.log("touchend");
+    console.log("short click");
+    clearTimeout(pressTimer);
+    if(flag) playSound(target.getAttribute('char'));
+    return false;
+  })
+
+  $(target).on('mousedown', () => {
+    console.log("touchstart");
+    clearTimeout(pressTimer);
+    flag=true;
+    pressTimer = window.setTimeout(function() {
+      console.log("long click");
+      playSound(target.getAttribute('char'), 0.3);
+      flag=false;
+    }, pressTime);
+    return false; 
+  }).on('mouseup', () => {
+    console.log("touchend");
+    console.log("short click");
+    clearTimeout(pressTimer);
+    if(flag) playSound(target.getAttribute('char'));
+    return false;
+  })
+}
+
+
+function isiOS(){
+  console.log("navigator.userAgent: ", navigator.userAgent);
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  ///Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 }

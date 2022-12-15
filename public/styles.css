@@ -2,7 +2,7 @@
 
 /* base */
 
-body{
+body {
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -12,35 +12,36 @@ body{
   background-color: #dcd6d9;
   height: 100vh;
   width: 100vw;
-  margin:0;
+  margin: 0;
   padding: 0;
   /* overflow: hidden; */
 }
 
-.hidden,
-.hidden *{
-  display: none!important;
+button {
+  /* touch-action: manipulation; */
 }
 
-.swipearea-overlay{
+.hidden,
+.hidden * {
+  display: none !important;
+}
+
+.swipearea-overlay {
   width: 100vw;
   height: 100vh;
-  /* opacity: 0.3; */
-  /* z-index: ; */
   position: absolute;
   top: 0;
   left: 0;
-  /* background-color: black; */
-} 
+}
 
 /* progress bar */
 
-.progress .indeterminate:after{
+.progress .indeterminate:after {
   animation: indeterminate 5s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite !important;
   animation-delay: 8s;
 }
 
-.progress .indeterminate:before{
+.progress .indeterminate:before {
   animation: indeterminate 5s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite !important;
 }
 
@@ -52,26 +53,27 @@ body{
 
 /* header menu */
 
-.header-menu{
+.header-menu {
   display: flex;
   justify-content: center;
   margin-bottom: 1.5rem;
   /* width: 100%; */
 }
 
-.btn-large{
+.btn-large {
   width: 120px;
 }
+
 /* spinner */
-.preloader-wrapper.small{
+.preloader-wrapper.small {
   margin-top: 7px;
 }
-.preloader-wrapper.small *{
+
+.preloader-wrapper.small * {
   border-color: white !important;
 }
 
-
-#debug-btn{
+#debug-btn {
   background-color: lightgray;
   color: dimgray;
   position: absolute;
@@ -81,21 +83,21 @@ body{
 
 /* current character */
 
-.current-vowel-wrapper{
+.current-vowel-wrapper {
   display: flex;
   justify-content: space-around;
   width: 60vw;
   margin: 0 auto 1.5rem auto;
 }
 
-.current-vowel-wrapper [type="radio"] + label:before,
-.current-vowel-wrapper [type="radio"] + label:after,
-.current-vowel-wrapper [type="radio"]:checked + label:before,
-.current-vowel-wrapper [type="radio"]:checked + label:after{
-  display: none !important; 
+.current-vowel-wrapper [type="radio"]+label:before,
+.current-vowel-wrapper [type="radio"]+label:after,
+.current-vowel-wrapper [type="radio"]:checked+label:before,
+.current-vowel-wrapper [type="radio"]:checked+label:after {
+  display: none !important;
 }
 
-.current-vowel-wrapper [type="radio"] + label{
+.current-vowel-wrapper [type="radio"]+label {
   font-family: 'Lalezar';
   padding-left: 0 !important;
   cursor: default;
@@ -110,28 +112,35 @@ body{
   text-align: center;
   transition: .28s ease;
   -webkit-transition: .28s ease;
-  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-.current-vowel-wrapper [type="radio"]:checked + label{
+.current-vowel-wrapper [type="radio"]:checked+label {
   color: dimgray;
 }
 
-.current-vowel-wrapper > .char:not(:checked){
+.current-vowel-wrapper>.char:not(:checked) {
   color: lightgray;
 }
 
 /* main wrapper */
 
-.main-wrapper{
+.main-wrapper,
+.main-wrapper button:disabled {
   display: flex;
   justify-content: center;
   margin-bottom: 5rem;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.main-wrapper button {
+  pointer-events: all;
 }
 
 /* consonants */
 
-.wrapper.consonants{
+.wrapper.consonants {
   max-width: 95vw;
   position: relative;
   margin-top: 2rem;
@@ -144,7 +153,7 @@ body{
   font-family: 'BIZ UDPGothic', sans-serif;
 }
 
-.aks-title{
+.aks-title {
   font-family: 'Lalezar';
   text-align: center;
   font-size: 3rem;
@@ -152,64 +161,70 @@ body{
   color: gray;
 }
 
-.aks-wrapper{
+.aks-wrapper {
   width: calc(95vw/5);
   max-width: 236px;
 }
 
-.v-center{
+.v-center {
   height: 110px;
   position: relative;
   max-width: 250px;
 }
 
 .v-center .left,
-.v-center .right{
+.v-center .right {
   top: -15px;
 }
-.v-center .left{
+
+.v-center .left {
   position: absolute;
   left: -15px;
 }
-.v-center .right{
+
+.v-center .right {
   position: absolute;
   right: -15px;
 }
-.aks-wrapper .bottom{
+
+.aks-wrapper .bottom {
   margin-top: 7px;
 }
-.flex.consonants{
+
+.flex.consonants {
   display: flex;
   justify-content: space-around;
   margin: 2rem 0;
 }
 
-.flex.consonants button{
+.flex.consonants button {
   width: 110px;
   height: 110px;
   font-size: 3rem;
   /* background-color: dimgray; */
   padding: 1rem;
   /* margin: 3rem 0; */
-  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   display: block;
   margin: auto;
 }
-.flex.consonants button.empty{
+
+.flex.consonants button.empty {
   background-color: transparent;
 }
-.flex.consonants button.small.empty{
+
+.flex.consonants button.small.empty {
   background-color: transparent;
   border: 0px;
 }
 
-.flex.consonants > div > div{
+.flex.consonants>div>div {
   display: flex;
   justify-content: center;
   /* width: 14rem; */
 }
 
-.flex.consonants button.small{
+.flex.consonants button.small {
   background-color: #d9e6bf;
 
   width: 70px;
@@ -219,16 +234,16 @@ body{
   margin: 0;
 }
 
-.flex.consonants > div > div > button:first-child{
+.flex.consonants>div>div>button:first-child {
   /* margin-left: -2rem; */
 }
 
-.flex.consonants  button:focus{
+.flex.consonants button:focus {
   background-color: #d6c6af;
   color: red;
 }
 
-textarea{
+textarea {
   width: 100%;
   min-height: 500px;
   font-size: 5rem;
@@ -236,38 +251,46 @@ textarea{
 
 /* debug component */
 
-#debug-component{
+#debug-component {
   position: absolute;
   right: 0;
   top: 0;
-  z-index: -10
+  /* pointer-events: none; */
+  background: transparent;
+  /* z-index: -10 */
 }
-.video-component{
+
+#debug-component .range-field {
+  pointer-events: all;
+}
+
+.video-component {
   max-width: 250px;
 }
-#debug-component input:not([type]){
+
+#debug-component input:not([type]) {
   height: 1rem;
-  
+
 }
 
-.debug-component.zero-width{
-  width: 0!important;
-  max-width: 0!important;
+.debug-component.zero-width {
+  width: 0 !important;
+  max-width: 0 !important;
 }
 
-#video-wrapper > video,
-#video-wrapper > canvas{
-  width:250px;
+#video-wrapper>video,
+#video-wrapper>canvas {
+  width: 250px;
 }
 
-#video-wrapper > canvas {
+#video-wrapper>canvas {
   position: absolute;
   top: 0;
   left: 0;
 }
 
 
-#debug-log input{
+#debug-log input {
   margin: 0;
   /* width: 300px; */
 }
