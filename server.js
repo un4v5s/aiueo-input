@@ -1,6 +1,6 @@
 const express = require('express')
 const path = require('path')
-const { get } = require('request')
+const port = process.env.PORT || 3001;
 
 const app = express()
 
@@ -19,4 +19,4 @@ app.use(express.static(path.join(__dirname, './dist')))
 app.get('/', (req, res) => res.sendFile(path.join(viewsDir, 'index.html')))
 // app.get('/', (req, res) => res.sendFile(path.join(docsDir, 'index.html'))) // for gh pages
 
-app.listen(3000, () => console.log('Listening on port 3000!'))
+app.listen(port, () => console.log(`Listening on port ${port}!`))
