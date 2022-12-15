@@ -304,7 +304,7 @@ function detectVowel(resizedResult){
 // change current vowel with swipe
 function setSwipe() {
   let t = document.querySelector(".swipearea-overlay");
-  console.log("t: ", t);
+  // console.log("t: ", t);
   let aiueo = "a i u e o".split(" ");
   let startX, startY;		// タッチ開始 x, y座標
   let moveX, moveY;	// スワイプ中の x, y座標

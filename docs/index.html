@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>あいうえおinput</title>
+  <script src="face-api.js"></script>
+  <script src="js/faceDetectionControls.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" crossorigin="anonymous"></script>
+  <script src="/js/script.js" crossorigin="anonymous"></script>
+  <script src="/js/charChanger.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="swipearea-overlay"></div>
+
+  <div class="progress hidden" id="running-loader">
+    <div class="indeterminate"></div>
+  </div>
+  <a id="debug-btn" class="waves-effect waves-light btn" onclick="toggleDebugMode()">debug mode</a>
+
+  <div class="header-menu">
+    <div>
+      <a id="start-btn" class="waves-effect waves-light btn-large" onclick="start()">START</a>
+      <a id="stop-btn" class="waves-effect waves-light btn-large hidden red darken-4" onclick="stop()">
+        <div class="preloader-wrapper small active">
+          <div class="spinner-layer">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+        <span></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="current-vowel-wrapper">
+    <div id="result-top" class="hidden">a</div>
+    <input name="currentVowel" type="radio" id="char-a" class="char" value="a" checked>
+    <label for="char-a">A</label>
+    <input name="currentVowel" type="radio" id="char-i" class="char" value="i">
+    <label for="char-i">I</label>
+    <input name="currentVowel" type="radio" id="char-u" class="char" value="u">
+    <label for="char-u">U</label>
+    <input name="currentVowel" type="radio" id="char-e" class="char" value="e">
+    <label for="char-e">E</label>
+    <input name="currentVowel" type="radio" id="char-o" class="char" value="o">
+    <label for="char-o">O</label>
+
+    <!-- <div id="char-a" class="char result">A</div>
+      <div id="char-i" class="char result">I</div>
+      <div id="char-u" class="char result">U</div>
+      <div id="char-e" class="char result">E</div>
+      <div id="char-o" class="char result">O</div> -->
+  </div>
+
+  <div class="main-wrapper">
+    <div class="wrapper consonants">
+      <div class="flex consonants">
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">A</span>
+          </div>
+          <div class="v-center">
+            <div class="left"></div>
+            <button value="a">あ</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom"></div>
+        </div>
+
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">K</span>
+          </div>
+          <div class="v-center">
+            <div class="left">
+              <button class="small" value="g">が</button>
+              <button class="small" value="gy">ぎゃ</button>
+            </div>
+            <button value="k">か</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom">
+            <button class="small" value="ky">きゃ</button>
+          </div>
+        </div>
+
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">S</span>
+          </div>
+          <div class="v-center">
+            <div class="left">
+              <button class="small" value="z">ざ</button>
+              <button class="small" value="jy">じゃ</button>
+            </div>
+            <button value="s">さ</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom">
+            <button class="small" value="sy">しゃ</button>
+          </div>
+        </div>
+
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">T</span>
+          </div>
+          <div class="v-center">
+            <div class="left">
+              <button class="small" value="d">だ</button>
+            </div>
+            <button value="t">た</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom">
+            <button class="small" value="ty">ちゃ</button>
+            <button class="small" value="tx"></button>
+          </div>
+        </div>
+
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">N</span>
+          </div>
+          <div class="v-center">
+            <div class="left">
+            </div>
+            <button value="n">な</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom">
+            <button class="small" value="ny">にゃ</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex consonants">
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">H</span>
+          </div>
+          <div class="v-center">
+            <div class="left">
+              <button class="small" value="b">ば</button>
+              <button class="small" value="by">びゃ</button>
+            </div>
+            <button value="h">は</button>
+            <div class="right">
+              <button class="small" value="p">ぱ</button>
+              <button class="small" value="py">ぴゃ</button>
+            </div>
+          </div>
+          <div class="bottom">
+            <button class="small" value="hy">ひゃ</button>
+            <button class="small" value="f">ふぁ</button>
+          </div>
+        </div>
+
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">M</span>
+          </div>
+          <div class="v-center">
+            <div class="left"></div>
+            <button value="m">ま</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom">
+            <button class="small" value="my">みゃ</button>
+          </div>
+        </div>
+
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">Y</span>
+          </div>
+          <div class="v-center">
+            <div class="left"></div>
+            <button value="y">や</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom">
+          </div>
+        </div>
+
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">R</span>
+          </div>
+          <div class="v-center">
+            <div class="left"></div>
+            <button value="r">ら</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom">
+            <button class="small" value="ry">りゃ</button>
+          </div>
+        </div>
+
+        <div class="aks-wrapper">
+          <div class="top">
+            <span class="aks-title">W</span>
+          </div>
+          <div class="v-center">
+            <div class="left"></div>
+            <button value="w">わ</button>
+            <div class="right"></div>
+          </div>
+          <div class="bottom"></div>
+        </div>
+      </div>
+
+      <!-- old version
+    <div class="main-wrapper">
+      <div class="wrapper consonants">
+        <div class="flex consonants">
+          <div>
+            <button value="a">あ</button>
+          </div>
+          <div>
+            <button value="k">か</button>
+            <div>
+              <button class="small" value="g">が</button>
+              <button class="small" value="ky">きゃ</button>
+              <button class="small" value="gy">ぎゃ</button>
+            </div>
+          </div>
+          <div>
+            <button value="s">さ</button>
+            <div>
+              <button class="small" value="z">ざ</button>
+              <button class="small" value="sy">しゃ</button>
+              <button class="small" value="jy">じゃ</button>
+            </div>
+          </div>
+          <div>
+            <button value="t">た</button>
+            <div>
+              <button class="small" value="d">だ</button>
+            </div>
+          </div>
+          <div>
+            <button value="n">な</button>
+            <div>
+              <button class="small" value="ny">にゃ</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex consonants">
+          <div>
+            <button value="h">は</button>
+            <div>
+              <button class="small" value="hy">ひゃ</button>
+              <button class="small" value="b">ば</button>
+              <button class="small" value="by">びゃ</button>
+              <button class="small" value="p">ぱ</button>
+              <button class="small" value="py">ぴゃ</button>
+            </div>
+          </div>
+          <div>
+            <button value="m">ま</button>
+            <div>
+              <button class="small" value="my">みゃ</button>
+            </div>
+          </div>
+          <div>
+            <button value="y">や</button>
+          </div>
+          <div>
+            <button value="r">ら</button>
+            <div>
+              <button class="small" value="ry">りゃ</button>
+            </div>
+          </div>
+          <div>
+            <button value="w">わ</button>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <div id="debug-component" class="video-component hidden">
+    <div style="position: relative" id="video-wrapper" class="video">
+      <!-- below video and canvas elements will programmicaly injected here -->
+      <!-- <video id="inputVideo" muted playsinline></video>
+          <canvas id="overlay" /> -->
+    </div>
+    <div id="debug-log">
+      <label>mouthOpen</label>
+      <input id="mouthOpen" style="font-size: 15px;">
+      <label>result:</label>
+      <input id="result" style="font-size: 15px;">
+      <label>highestExpression:</label>
+      <input id="highestExpression" style="font-size: 15px;">
+      <label>surprised:</label>
+      <input id="surprised" style="font-size: 15px;">
+      <label>happy:</label>
+      <input id="happy" style="font-size: 15px;">
+      <br>
+      <!-- innerLipsOpenDist: <span id="innerLipsOpenDist" style="font-size: 15px;"> -->
+      <!-- outerLipsOpenDist: <span id="outerLipsOpenDist" style="font-size: 15px;"> -->
+      <label>innerLipsOpenDistWithRatio:</label>
+      <input id="innerLipsOpenDistWithRatio" style="font-size: 15px;">
+      <label>outerLipsOpenDistWithRatio:</label>
+      <input id="outerLipsOpenDistWithRatio" style="font-size: 15px;">
+      <!-- eyeOuterEndDist: <input id="eyeOuterEndDist" style="font-size: 15px;"> -->
+      <!-- lipsOuterEndDist: <input id="lipsOuterEndDist" style="font-size: 15px;"> -->
+      <br>
+      <label>lipsOuterWidthDist/eyeOuterWidthDist:</label>
+      <input id="lipsOuterWidthDist-eyeOuterWidthDist" style="font-size: 15px;">
+      <!-- <label>outerLipsRhombus:</label><input id="outerLipsRhombus" style="font-size: 15px;"> -->
+      <label>outerLipsRhombusWithRatio:</label>
+      <input id="outerLipsRhombusWithRatio" style="font-size: 15px;">
+      <form action="#">
+        <p class="range-field">
+          <input type="range" id="test5" min="10" max="200" />
+        </p>
+      </form>
+
+    </div>
+
+</body>
+
+</html>
