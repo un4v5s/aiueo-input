@@ -1,0 +1,366 @@
+@import url('https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@700&family=Klee+One:wght@600&family=Lalezar&display=swap');
+
+/* base */
+
+body{
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  /* touch-action: none; */
+  background-color: #dcd6d9;
+  height: 100vh;
+  width: 100vw;
+  margin:0;
+  padding: 0;
+  /* overflow: hidden; */
+}
+
+.hidden,
+.hidden *{
+  display: none!important;
+}
+
+.swipearea-overlay{
+  width: 100vw;
+  height: 100vh;
+  /* opacity: 0.3; */
+  /* z-index: ; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* background-color: black; */
+} 
+
+/* progress bar */
+
+.progress .indeterminate:after{
+  animation: indeterminate 5s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite !important;
+  animation-delay: 8s;
+}
+
+.progress .indeterminate:before{
+  animation: indeterminate 5s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite !important;
+}
+
+#running-loader {
+  margin: 0 !important;
+  position: absolute;
+  z-index: 10;
+}
+
+/* header menu */
+
+.header-menu{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  /* width: 100%; */
+}
+
+.btn-large{
+  width: 120px;
+}
+/* spinner */
+.preloader-wrapper.small{
+  margin-top: 7px;
+}
+.preloader-wrapper.small *{
+  border-color: white !important;
+}
+
+
+#debug-btn{
+  background-color: lightgray;
+  color: dimgray;
+  position: absolute;
+  top: 3;
+  right: 0;
+}
+
+/* current character */
+
+.current-vowel-wrapper{
+  display: flex;
+  justify-content: space-around;
+  width: 60vw;
+  margin: 0 auto 1.5rem auto;
+}
+
+.current-vowel-wrapper [type="radio"] + label:before,
+.current-vowel-wrapper [type="radio"] + label:after,
+.current-vowel-wrapper [type="radio"]:checked + label:before,
+.current-vowel-wrapper [type="radio"]:checked + label:after{
+  display: none !important; 
+}
+
+.current-vowel-wrapper [type="radio"] + label{
+  font-family: 'Lalezar';
+  padding-left: 0 !important;
+  cursor: default;
+  display: block !important;
+  font-size: 6rem !important;
+  line-height: 6rem !important;
+  user-select: none !important;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  width: 60px;
+  text-align: center;
+  transition: .28s ease;
+  -webkit-transition: .28s ease;
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+}
+
+.current-vowel-wrapper [type="radio"]:checked + label{
+  color: dimgray;
+}
+
+.current-vowel-wrapper > .char:not(:checked){
+  color: lightgray;
+}
+
+/* main wrapper */
+
+.main-wrapper{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+
+/* consonants */
+
+.wrapper.consonants{
+  max-width: 95vw;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.wrapper.consonants button {
+  background-color: #b9d08b;
+  border-radius: 20px;
+  /* font-family: 'Klee One'; */
+  font-family: 'BIZ UDPGothic', sans-serif;
+}
+
+.aks-title{
+  font-family: 'Lalezar';
+  text-align: center;
+  font-size: 3rem;
+  height: 60px;
+  color: gray;
+}
+
+.aks-wrapper{
+  width: calc(95vw/5);
+  max-width: 236px;
+}
+
+.v-center{
+  height: 110px;
+  position: relative;
+  max-width: 250px;
+}
+
+.v-center .left,
+.v-center .right{
+  top: -15px;
+}
+.v-center .left{
+  position: absolute;
+  left: -15px;
+}
+.v-center .right{
+  position: absolute;
+  right: -15px;
+}
+.aks-wrapper .bottom{
+  margin-top: 7px;
+}
+.flex.consonants{
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+}
+
+.flex.consonants button{
+  width: 110px;
+  height: 110px;
+  font-size: 3rem;
+  /* background-color: dimgray; */
+  padding: 1rem;
+  /* margin: 3rem 0; */
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+  display: block;
+  margin: auto;
+}
+.flex.consonants button.empty{
+  background-color: transparent;
+}
+.flex.consonants button.small.empty{
+  background-color: transparent;
+  border: 0px;
+}
+
+.flex.consonants > div > div{
+  display: flex;
+  justify-content: center;
+  /* width: 14rem; */
+}
+
+.flex.consonants button.small{
+  background-color: #d9e6bf;
+
+  width: 70px;
+  height: 70px;
+  font-size: 1.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.flex.consonants > div > div > button:first-child{
+  /* margin-left: -2rem; */
+}
+
+.flex.consonants  button:focus{
+  background-color: #d6c6af;
+  color: red;
+}
+
+textarea{
+  width: 100%;
+  min-height: 500px;
+  font-size: 5rem;
+}
+
+/* debug component */
+
+#debug-component{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -10
+}
+.video-component{
+  max-width: 250px;
+}
+#debug-component input:not([type]){
+  height: 1rem;
+  
+}
+
+.debug-component.zero-width{
+  width: 0!important;
+  max-width: 0!important;
+}
+
+#video-wrapper > video,
+#video-wrapper > canvas{
+  width:250px;
+}
+
+#video-wrapper > canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+#debug-log input{
+  margin: 0;
+  /* width: 300px; */
+}
+
+
+/* unused */
+
+/* div.subtitle_wrapper{
+  text-align: center;
+  top: -2rem;
+  position: absolute;
+  margin: -1rem;
+  font-size: 2rem;
+  font-family: sans-serif;
+}
+
+div.subtitle_wrapper > span{
+  background-color: white;
+  padding: 1rem;
+}
+
+div.flex {
+  display: flex;
+  justify-content: space-around;
+} 
+
+.page-container {
+  left: 0;
+  right: 0;
+  margin: auto;
+  margin-top: 20px;
+  padding-left: 280px;
+  display: inline-flex !important;
+} 
+
+@media only screen and (max-width : 992px) {
+  .page-container {
+    padding-left: 0;
+    display: flex !important;
+  }
+}
+
+#navbar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.center-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+.side-by-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.side-by-side >* {
+  margin: 0 5px;
+}
+
+
+.bold {
+  font-weight: bold;
+}
+
+.margin-sm {
+  margin: 5px;
+}
+
+.margin {
+  margin: 20px;
+}
+
+.button-sm {
+  padding: 0 10px !important;
+}
+
+.pad-sides-sm {
+  padding: 0 8px !important;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background: #26a69a;
+    border: 1px solid gray;
+    cursor: pointer;
+    color: #fff;
+    border-radius: .2em;
+}
+
+*/
