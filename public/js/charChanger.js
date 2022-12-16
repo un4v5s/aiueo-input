@@ -109,24 +109,16 @@ window.addEventListener("load", () => {
   changeKeyTop('a');
 });
 
-function playSound(fileName, playbackRate = 0) {
-  console.log(fileName);
-  const audio = new Audio(`sounds/${fileName}_1.wav`);
-  if(playbackRate){
-    audio.playbackRate = playbackRate;
-  }
-  // audio.play();
-  audio.cloneNode().play();  
-}
-
+// change key tops with vowel
 function changeKeyTop(detectedVowel) {
   const idx = "a i u e o".split(" ").indexOf(detectedVowel);
   // console.log("idx: ", idx);
 
-  if (buttons == undefined){
-    buttons = document.querySelectorAll(".flex.consonants button");
-  }
+  // if (buttons == undefined){
+  //   buttons = document.querySelectorAll(".flex.consonants button");
+  // }
 
+  // set keytops
   buttons.forEach((e) => {
     const d = dic[e.value];
     const d_en = dic_en[e.value];
@@ -152,17 +144,17 @@ function handleClickEvent(target) {
   // not working with addEventlistener
   // not working with $(target).touchend()
   $(target).on('touchstart', () => {
-    console.log("touchstart");
+    // console.log("touchstart");
     clearTimeout(pressTimer);
     flag=true;
     pressTimer = window.setTimeout(function() {
       console.log("long click");
-      playSound(target.getAttribute('char'), 0.3);
+      playSound(target.getAttribute('char'), 0.5);
       flag=false;
     }, pressTime);
     return false; 
   }).on('touchend', () => {
-    console.log("touchend");
+    // console.log("touchend");
     console.log("short click");
     clearTimeout(pressTimer);
     if(flag) playSound(target.getAttribute('char'));
@@ -170,17 +162,17 @@ function handleClickEvent(target) {
   })
 
   $(target).on('mousedown', () => {
-    console.log("touchstart");
+    // console.log("mousedown");
     clearTimeout(pressTimer);
     flag=true;
     pressTimer = window.setTimeout(function() {
       console.log("long click");
-      playSound(target.getAttribute('char'), 0.3);
+      playSound(target.getAttribute('char'), 0.5);
       flag=false;
     }, pressTime);
     return false; 
   }).on('mouseup', () => {
-    console.log("touchend");
+    // console.log("mouseup");
     console.log("short click");
     clearTimeout(pressTimer);
     if(flag) playSound(target.getAttribute('char'));
@@ -189,8 +181,63 @@ function handleClickEvent(target) {
 }
 
 
-function isiOS(){
-  console.log("navigator.userAgent: ", navigator.userAgent);
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  ///Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+// play sound
+
+// howl
+window.addEventListener('load', () => {
+  // loadAllSounds(); //hawl
+  loadAllSoundsTone();
+})
+
+// let howlObj = {};
+// function loadAllSounds(){
+//   for (const [key, value] of Object.entries(dic_en)) {
+//     for(const v of value){
+//       if(v!=''){
+//         howlObj[v] = new Howl({
+//           src: [`sounds/${v}_1.mp3`],
+//           preload: true
+//           // html5:true, // this must be needed to change playback rate without changing pitch
+//           // pool: 10
+//         });
+//       }
+//     }
+//   }
+// }
+
+let toneObj = {};
+// const pitchShift = new Tone.PitchShift().toDestination(); 
+function loadAllSoundsTone(){
+  for (const [key, value] of Object.entries(dic_en)) {
+    for(const v of value){
+      if(v!=''){
+        toneObj[v] = new Tone.Player(`sounds/${v}_1.mp3`) //.connect(pitchShift);
+      }
+    }
+  }
+}
+
+function playSound(fileName, playbackRate = 1) {
+  console.log(fileName);
+  toneObj[fileName].toMaster().start()
+
+  // once long press occur, voice doubled. need fix.
+  // if(playbackRate != 1){
+  //   toneObj[fileName].playbackRate = playbackRate;
+  //   pitchShift.pitch = 12;
+  //   toneObj[fileName].onstop = () => {
+  //     console.log("callback")
+  //     pitchShift.pitch = 0;
+  //     pitchShift.toMaster();
+
+  //     // pitchShift.dispose();
+  //     toneObj[fileName].playbackRate = 1;
+  //   }
+  //   toneObj[fileName].restart()
+  //   toneObj[fileName].start()
+
+  // }else{
+  //   toneObj[fileName].restart()
+  //   toneObj[fileName].start()
+  // }
 }

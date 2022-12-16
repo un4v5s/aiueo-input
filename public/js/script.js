@@ -1,5 +1,4 @@
 let withBoxes = true;
-let stopFlag = false;
 let loaderRunning = false;
 // function onChangeHideBoundingBoxes(e) {
 //   withBoxes = !$(e.target).prop("checked");
@@ -10,16 +9,19 @@ let canvas = null;
 let streaming = false;
 
 async function onPlay() {
-  console.log("onPlay()");
-  // console.log("intervalId: ", intervalId);
   const video = document.getElementById("inputVideo");
 
   if (video.paused || video.ended || !isFaceDetectionModelLoaded()){
+  // if (video.ended || !isFaceDetectionModelLoaded()){ 
+    if(video.ended){
+      console.log("video.ended is true, so clearInterval()");
+      clearInterval(intervalId);
+    }
     return;
   }
 
   // hide spinner and start progress bar
-  if(streaming==false && stopFlag==false){
+  if(streaming==false){
     toggleStopBtnSpinner(false);
     toggleProgressBar(true);
     streaming = true;
@@ -44,19 +46,13 @@ async function onPlay() {
       faceapi.draw.drawFaceLandmarks(canvas, resizedResult);
     }
 
-    // custom process
+    // face recognization process
     detectVowel(result);
-  }
-
-  if(stopFlag){
-    clearInterval(intervalId);
-    return;
   }
 }
 
 async function start() {
   console.log("start()");
-  stopFlag = false;
 
   toggleStopBtnSpinner(true);
   toggleStartStopBtn(true);
@@ -66,8 +62,6 @@ async function start() {
   await changeFaceDetector(TINY_FACE_DETECTOR);
   await faceapi.loadFaceExpressionModel("/");
   await faceapi.loadFaceLandmarkModel("/");
-
-  // changeInputSize(224);
 
   // try to access users webcam and stream the images to the video element
   const opt = {
@@ -84,9 +78,9 @@ async function start() {
   return new Promise((resolve) => {
     video.onloadedmetadata = () => {
       console.log("onloadedmetadata");
-      if(stopFlag==false){
-        intervalId = setInterval(() => onPlay(), 200)
-      }
+      video.play();
+      intervalId = setInterval(() => onPlay(), 200)
+      console.log("intervalId: ", intervalId);
       resolve();
     };
   });
@@ -117,8 +111,6 @@ function toggleProgressBar(bool){
 }
 
 async function stop() {
-  stopFlag = true;
-
   toggleStartStopBtn(false);
   // toggleStopBtnSpinner(false); // already run when stream started
   toggleProgressBar(false);
@@ -133,7 +125,9 @@ window.addEventListener("load", () => {
   // programmatically add video and canvas element
   const video = document.createElement("video"); 
   video.setAttribute('id', 'inputVideo');
-  video.setAttribute('autoplay', 'muted');
+  // video.setAttribute('autoplay', ''); // autoplay pause video when element hidden
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
   document.getElementById("video-wrapper").appendChild(video);
 
   const canvas = document.createElement("canvas"); 
@@ -398,46 +392,3 @@ function setSwipe() {
     }
   };
 }
-
-
-// ios?
-// async function start(){
-//   initFaceDetectionControls();
-
-//   await changeFaceDetector(TINY_FACE_DETECTOR)
-//   await faceapi.loadFaceExpressionModel('/')
-//   await faceapi.loadFaceLandmarkModel('/')
-
-//   changeInputSize(224)
-
-//   await setupCamera();
-//   // const deviceInfos = await navigator.mediaDevices.enumerateDevices();
-// 	// deviceInfos.forEach(deviceInfo=>{
-// 	// 	console.log(deviceInfo.kind, deviceInfo.label, deviceInfo.deviceId);
-// 	// })
-// 	// const constraints = await navigator.mediaDevices.getSupportedConstraints();
-// 	// for (const [key, value] of Object.entries(constraints)) {
-//   //   console.log(`${key}: ${value}`);
-//   // }
-//   // navigator.mediaDevices.ondevicechange = function(event) {
-//   //   console.log("ondevicechange", event)
-//   // }
-// }
-
-// async function setupCamera() {
-//   const stream = await navigator.mediaDevices.getUserMedia({'audio': false, 'video': {facingMode:'user'}});
-// 	const video = document.getElementById('inputVideo');
-//   video.style.width = document.width + 'px';
-//   video.style.height = document.height + 'px';
-//   video.setAttribute('autoplay', '');
-//   video.setAttribute('muted', '');
-//   video.setAttribute('playsinline', '');
-//   video.srcObject = stream;
-//   return new Promise((resolve) => {
-//     video.onloadedmetadata = () => {
-//       console.log("onloadedmetadata");
-//       onPlay();
-// 			resolve();
-//     };
-//   });
-// }

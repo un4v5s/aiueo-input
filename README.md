@@ -47,7 +47,6 @@ In Progress
 
 ## Requirement
 
-[face-api.js](https://github.com/justadudewhohacks/face-api.js)
 
 ## Usage
 
@@ -62,4 +61,9 @@ In Progress
 ## Author
 
 [un4v5s](https://github.com/un4v5s)
+
+## References and Inspiration
+
+- [face-api.js](https://github.com/justadudewhohacks/face-api.js)
+
 

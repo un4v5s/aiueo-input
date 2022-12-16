@@ -14,11 +14,13 @@ body {
   width: 100vw;
   margin: 0;
   padding: 0;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
-button {
-  /* touch-action: manipulation; */
+#test-btn {
+  pointer-events: all;
+  z-index: 100;
+  cursor: grab;
 }
 
 .hidden,
@@ -116,7 +118,7 @@ button {
 }
 
 .current-vowel-wrapper [type="radio"]:checked+label {
-  color: dimgray;
+  color: rgb(68, 68, 68);
 }
 
 .current-vowel-wrapper>.char:not(:checked) {
@@ -149,6 +151,8 @@ button {
 .wrapper.consonants button {
   background-color: #b9d08b;
   border-radius: 20px;
+  border-color: dimgray;
+  border: 0px solid;
   /* font-family: 'Klee One'; */
   font-family: 'BIZ UDPGothic', sans-serif;
 }
@@ -188,7 +192,7 @@ button {
 }
 
 .aks-wrapper .bottom {
-  margin-top: 7px;
+  margin-top: 3px;
 }
 
 .flex.consonants {
@@ -201,9 +205,7 @@ button {
   width: 110px;
   height: 110px;
   font-size: 3rem;
-  /* background-color: dimgray; */
   padding: 1rem;
-  /* margin: 3rem 0; */
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   display: block;
   margin: auto;
@@ -234,20 +236,16 @@ button {
   margin: 0;
 }
 
-.flex.consonants>div>div>button:first-child {
-  /* margin-left: -2rem; */
-}
-
 .flex.consonants button:focus {
   background-color: #d6c6af;
   color: red;
 }
 
-textarea {
+/* textarea {
   width: 100%;
   min-height: 500px;
   font-size: 5rem;
-}
+} */
 
 /* debug component */
 
@@ -270,7 +268,6 @@ textarea {
 
 #debug-component input:not([type]) {
   height: 1rem;
-
 }
 
 .debug-component.zero-width {
@@ -289,101 +286,50 @@ textarea {
   left: 0;
 }
 
-
 #debug-log input {
   margin: 0;
-  /* width: 300px; */
 }
 
+/* Portrait */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) { 
+    .aks-title {
+      font-family: 'Lalezar';
+      text-align: center;
+      font-size: 2rem;
+      height: 30px;
+      color: gray;
+    }
+    .v-center {
+      height: 60px;
+      position: relative;
+      max-width: 250px;
+    }
+    
+    .v-center .left,
+    .v-center .right {
+      top: 0px;
+    }
 
-/* unused */
-
-/* div.subtitle_wrapper{
-  text-align: center;
-  top: -2rem;
-  position: absolute;
-  margin: -1rem;
-  font-size: 2rem;
-  font-family: sans-serif;
+    .flex.consonants button {
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      padding: 0rem;
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+      display: block;
+      margin: auto;
+    }
+    
+    .flex.consonants button.small {
+      background-color: #d9e6bf;
+      width: 30px;
+      height: 30px;
+      font-size: 0.7rem;
+      padding: 0;
+      margin: 0;
+    }
 }
-
-div.subtitle_wrapper > span{
-  background-color: white;
-  padding: 1rem;
-}
-
-div.flex {
-  display: flex;
-  justify-content: space-around;
-} 
-
-.page-container {
-  left: 0;
-  right: 0;
-  margin: auto;
-  margin-top: 20px;
-  padding-left: 280px;
-  display: inline-flex !important;
-} 
-
-@media only screen and (max-width : 992px) {
-  .page-container {
-    padding-left: 0;
-    display: flex !important;
-  }
-}
-
-#navbar {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-
-.center-content {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-
-.side-by-side {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.side-by-side >* {
-  margin: 0 5px;
-}
-
-
-.bold {
-  font-weight: bold;
-}
-
-.margin-sm {
-  margin: 5px;
-}
-
-.margin {
-  margin: 20px;
-}
-
-.button-sm {
-  padding: 0 10px !important;
-}
-
-.pad-sides-sm {
-  padding: 0 8px !important;
-}
-
-input[type="file"]::-webkit-file-upload-button {
-    background: #26a69a;
-    border: 1px solid gray;
-    cursor: pointer;
-    color: #fff;
-    border-radius: .2em;
-}
-
-*/

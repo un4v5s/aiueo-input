@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>あいうえおinput</title>
+
   <script src="face-api.js"></script>
   <script src="js/faceDetectionControls.js"></script>
   <link rel="stylesheet" href="styles.css">
@@ -10,9 +14,11 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" crossorigin="anonymous"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" integrity="sha512-jduERlz7En1IUZR54bqzpNI64AbffZWR//KJgF71SJ8D8/liKFZ+s1RxmUmB+bhCnIfzebdZsULwOrbVB5f3nQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <script src="/js/script.js" crossorigin="anonymous"></script>
   <script src="/js/charChanger.js" crossorigin="anonymous"></script>
-  <meta name="viewport" content="width=device-width">
 </head>
 
 <body>
@@ -24,6 +30,7 @@
   <a id="debug-btn" class="waves-effect waves-light btn" onclick="toggleDebugMode()">debug mode</a>
 
   <div class="header-menu">
+    <!-- <button id="test-btn">ボタン</button> -->
     <div>
       <a id="start-btn" class="waves-effect waves-light btn-large" onclick="start()">START</a>
       <a id="stop-btn" class="waves-effect waves-light btn-large hidden red darken-4" onclick="stop()">
