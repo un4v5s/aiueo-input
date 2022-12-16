@@ -62,6 +62,11 @@ body {
   /* width: 100%; */
 }
 
+.header-menu a {
+  pointer-events: all;
+
+}
+
 .btn-large {
   width: 120px;
 }
@@ -291,45 +296,42 @@ body {
 }
 
 /* Portrait */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 812px) 
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: portrait) { 
-    .aks-title {
-      font-family: 'Lalezar';
-      text-align: center;
-      font-size: 2rem;
-      height: 30px;
-      color: gray;
-    }
-    .v-center {
-      height: 60px;
-      position: relative;
-      max-width: 250px;
-    }
-    
-    .v-center .left,
-    .v-center .right {
-      top: 0px;
-    }
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+  .aks-title {
+    font-family: 'Lalezar';
+    text-align: center;
+    font-size: 2rem;
+    height: 30px;
+    color: gray;
+  }
 
-    .flex.consonants button {
-      width: 50px;
-      height: 50px;
-      font-size: 1.5rem;
-      padding: 0rem;
-      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-      display: block;
-      margin: auto;
-    }
-    
-    .flex.consonants button.small {
-      background-color: #d9e6bf;
-      width: 30px;
-      height: 30px;
-      font-size: 0.7rem;
-      padding: 0;
-      margin: 0;
-    }
+  .v-center {
+    height: 60px;
+    position: relative;
+    max-width: 250px;
+  }
+
+  .v-center .left,
+  .v-center .right {
+    top: 0px;
+  }
+
+  .flex.consonants button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    padding: 0rem;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    display: block;
+    margin: auto;
+  }
+
+  .flex.consonants button.small {
+    background-color: #d9e6bf;
+    width: 30px;
+    height: 30px;
+    font-size: 0.7rem;
+    padding: 0;
+    margin: 0;
+  }
 }

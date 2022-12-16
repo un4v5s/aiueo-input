@@ -7,6 +7,7 @@ let intervalId = null;
 let debugMode = false;
 let canvas = null;
 let streaming = false;
+let stopFlag = false;
 
 async function onPlay() {
   const video = document.getElementById("inputVideo");
@@ -16,6 +17,7 @@ async function onPlay() {
     if(video.ended){
       console.log("video.ended is true, so clearInterval()");
       clearInterval(intervalId);
+      stopFlag = true;
     }
     return;
   }
@@ -53,6 +55,7 @@ async function onPlay() {
 
 async function start() {
   console.log("start()");
+  stopFlag = false;
 
   toggleStopBtnSpinner(true);
   toggleStartStopBtn(true);
@@ -78,9 +81,11 @@ async function start() {
   return new Promise((resolve) => {
     video.onloadedmetadata = () => {
       console.log("onloadedmetadata");
-      video.play();
-      intervalId = setInterval(() => onPlay(), 200)
-      console.log("intervalId: ", intervalId);
+      if(stopFlag==false){
+        video.play();
+        intervalId = setInterval(() => onPlay(), 200)
+        console.log("intervalId: ", intervalId);
+      }
       resolve();
     };
   });
@@ -111,12 +116,14 @@ function toggleProgressBar(bool){
 }
 
 async function stop() {
+  console.log("stop()")
+  stopFlag = true;
   toggleStartStopBtn(false);
   // toggleStopBtnSpinner(false); // already run when stream started
   toggleProgressBar(false);
 
   const video = document.getElementById("inputVideo");
-  localStream.getVideoTracks()[0].stop();
+  localStream.getVideoTracks()?.[0].stop();
   video.src = '';
   streaming = false;
 }
