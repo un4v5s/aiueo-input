@@ -36,6 +36,36 @@ body {
   left: 0;
 }
 
+/* sounds loader */
+#sounds-loader-overlay{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0, 0.5);
+  z-index: 100;
+}
+
+#sounds-loader-overlay .preloader-wrapper{
+  position: relative;
+  width: 100px;
+  height: 100px;
+  left: calc(50vw - 50px);
+  top: calc(50vh - 50px);
+}
+
+#sounds-loader-overlay .sounds-loading-message{
+  position: absolute;
+  text-align: center;
+  width: 300px;
+  left: calc(50vw - 150px);
+  top: calc(50vh + 50px);
+  font-size: 2rem;
+  color: lightgray;
+}
+
+
 /* progress bar */
 
 .progress .indeterminate:after {
@@ -295,8 +325,15 @@ body {
   margin: 0;
 }
 
+.range-field #swipe-sensitivity{
+  border: none;
+}
+
 /* Portrait */
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+  body{
+    margin-top: 40px !important;
+  }
   .aks-title {
     font-family: 'Lalezar';
     text-align: center;

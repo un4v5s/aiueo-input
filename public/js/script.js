@@ -1,8 +1,5 @@
 let withBoxes = true;
 let loaderRunning = false;
-// function onChangeHideBoundingBoxes(e) {
-//   withBoxes = !$(e.target).prop("checked");
-// }
 let intervalId = null;
 let debugMode = false;
 let canvas = null;
@@ -123,7 +120,7 @@ async function stop() {
   toggleProgressBar(false);
 
   const video = document.getElementById("inputVideo");
-  localStream.getVideoTracks()?.[0].stop();
+  window.localStream?.getVideoTracks()?.[0].stop();
   video.src = '';
   streaming = false;
 }
@@ -132,7 +129,7 @@ window.addEventListener("load", () => {
   // programmatically add video and canvas element
   const video = document.createElement("video"); 
   video.setAttribute('id', 'inputVideo');
-  // video.setAttribute('autoplay', ''); // autoplay pause video when element hidden
+  // video.setAttribute('autoplay', ''); // autoplay auto pause video when element hidden
   video.setAttribute('muted', '');
   video.setAttribute('playsinline', '');
   document.getElementById("video-wrapper").appendChild(video);
@@ -147,7 +144,7 @@ window.addEventListener("load", () => {
 
 
 function detectVowel(resizedResult){
-  const landmarkPositions = resizedResult.landmarks.positions;
+  // const landmarkPositions = resizedResult.landmarks.positions;
   const expressions = resizedResult.expressions;
   const highestExpression = Object.keys(expressions).reduce((a, b) =>
     expressions[a] > expressions[b] ? a : b
@@ -199,27 +196,22 @@ function detectVowel(resizedResult){
   document.getElementById("outerLipsOpenDistWithRatio").value = _.round(outerLipsOpenDistWithRatio, 2);
 
   if (mouthOpen) {
-    // document.getElementById("outerLipsRhombus").value = _.round(outerLipsRhombus, 2);
     document.getElementById("outerLipsRhombusWithRatio").value = _.round(outerLipsRhombusWithRatio, 2);
   }
 
   let resultVowel = "", resultVowelJp = "";
-  // const currentVowel = document.getElementById("result-top").innerText;
   const currentVowel = document.querySelector('input[name="currentVowel"]:checked').value;
 
   if (!mouthOpen) {
-    // console.log("う");
     resultVowelJp = "う"
     resultVowel = "u";
 
   // happyは「い」「え」
   } else if (highestExpression == "happy") {
     if (innerLipsOpenDistWithRatio < 0.17) {
-      // console.log("い");
       resultVowelJp = "い";
       resultVowel = "i";
     } else {
-      // console.log("え");
       resultVowelJp = "え";
       resultVowel = "e";
     }
@@ -228,11 +220,9 @@ function detectVowel(resizedResult){
   } else if (highestExpression == "surprised") {
     // 「あ」「う」の判断は唇上下中央、唇左右端の4点をひし形として計算。（対角線 * 対角線 / 2）
     if (innerLipsOpenDistWithRatio >= 0.2) {
-      // console.log("あ");
       resultVowelJp = "あ";
       resultVowel = "a";
     } else {
-      // console.log("お");
       resultVowelJp = "お";
       resultVowel = "o";
     }
@@ -243,12 +233,10 @@ function detectVowel(resizedResult){
     resultVowel = "o";
   }
 
+  // console.log("resultVowelJp: ", resultVowelJp);
   if(currentVowel!=resultVowelJp){
     changeKeyTop(resultVowel);
-    // document.getElementById(`char-${resultVowel}`).checked = true
     document.getElementById(`char-${resultVowel}`).click();
-    // document.getElementById("result").value = resultVowel;
-    // document.getElementById("result-top").innerText = resultVowelJp;
   }
 
   // old 20221210 16:35
@@ -343,7 +331,6 @@ function setSwipe() {
     e.preventDefault();
     startX = e.pageX;
     startY = e.pageY;
-    // tmpCurrentVowel = document.getElementById("result-top").innerText;
     tmpCurrentVowel = document.querySelector('input[name="currentVowel"]:checked').value;
     tmpIdx = aiueo.indexOf(tmpCurrentVowel);
     // console.log("tmpCurrentVowel: ", tmpCurrentVowel);

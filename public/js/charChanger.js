@@ -114,10 +114,6 @@ function changeKeyTop(detectedVowel) {
   const idx = "a i u e o".split(" ").indexOf(detectedVowel);
   // console.log("idx: ", idx);
 
-  // if (buttons == undefined){
-  //   buttons = document.querySelectorAll(".flex.consonants button");
-  // }
-
   // set keytops
   buttons.forEach((e) => {
     const d = dic[e.value];
@@ -183,12 +179,12 @@ function handleClickEvent(target) {
 
 // play sound
 
-// howl
 window.addEventListener('load', () => {
-  // loadAllSounds(); //hawl
-  loadAllSoundsTone();
+  // loadAllSounds(); //Hawler
+  loadAllSoundsToneWithPlayers(); //Tone.js
 })
 
+// Howler version
 // let howlObj = {};
 // function loadAllSounds(){
 //   for (const [key, value] of Object.entries(dic_en)) {
@@ -205,39 +201,41 @@ window.addEventListener('load', () => {
 //   }
 // }
 
+// Tone.js
 let toneObj = {};
-// const pitchShift = new Tone.PitchShift().toDestination(); 
-function loadAllSoundsTone(){
+const pitchShift = new Tone.PitchShift().toDestination();//toMaster();
+let tonePlayers;
+function loadAllSoundsToneWithPlayers(){
+  let toneUrls = {};
   for (const [key, value] of Object.entries(dic_en)) {
     for(const v of value){
       if(v!=''){
-        toneObj[v] = new Tone.Player(`sounds/${v}_1.mp3`) //.connect(pitchShift);
+        toneUrls[v] = `${v}_1.mp3`
       }
     }
   }
+  tonePlayers = new Tone.Players({
+    urls: toneUrls,
+    baseUrl: "sounds/",
+    onload: () => {
+      console.log("sounds loaded");
+      document.getElementById("sounds-loader-overlay").classList.add("hidden");
+    }
+  })
+  .connect(pitchShift)
 }
 
-function playSound(fileName, playbackRate = 1) {
+async function playSound(fileName, playbackRate = 1) {
   console.log(fileName);
-  toneObj[fileName].toMaster().start()
 
-  // once long press occur, voice doubled. need fix.
-  // if(playbackRate != 1){
-  //   toneObj[fileName].playbackRate = playbackRate;
-  //   pitchShift.pitch = 12;
-  //   toneObj[fileName].onstop = () => {
-  //     console.log("callback")
-  //     pitchShift.pitch = 0;
-  //     pitchShift.toMaster();
-
-  //     // pitchShift.dispose();
-  //     toneObj[fileName].playbackRate = 1;
-  //   }
-  //   toneObj[fileName].restart()
-  //   toneObj[fileName].start()
-
-  // }else{
-  //   toneObj[fileName].restart()
-  //   toneObj[fileName].start()
-  // }
+  // issue here, audio playback doubled 
+  if(playbackRate != 1){
+    pitchShift.pitch = 12;
+    tonePlayers.player(fileName).playbackRate = 0.5;
+    tonePlayers.player(fileName).start(3);
+  }else{
+    pitchShift.pitch = 1;
+    tonePlayers.player(fileName).playbackRate = 1.0;
+    tonePlayers.player(fileName).start();
+  }
 }

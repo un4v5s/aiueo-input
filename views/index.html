@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>あいうえおinput</title>
 
-  <script src="face-api.js"></script>
-  <script src="js/faceDetectionControls.js"></script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
+  <script src="face-api.js"></script>
+  <script src="js/faceDetectionControls.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" crossorigin="anonymous"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" integrity="sha512-jduERlz7En1IUZR54bqzpNI64AbffZWR//KJgF71SJ8D8/liKFZ+s1RxmUmB+bhCnIfzebdZsULwOrbVB5f3nQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
   <script src="/js/script.js" crossorigin="anonymous"></script>
   <script src="/js/charChanger.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <div class="swipearea-overlay"></div>
-
+  <div id="sounds-loader-overlay">
+    <div class="preloader-wrapper large active">
+      <div class="spinner-layer">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+    <span class="sounds-loading-message">Loading sounds...</span>
+  </div>
   <div class="progress hidden" id="running-loader">
     <div class="indeterminate"></div>
   </div>
@@ -53,7 +66,6 @@
   </div>
 
   <div class="current-vowel-wrapper">
-    <!-- <div id="result-top" class="hidden">a</div> -->
     <input name="currentVowel" type="radio" id="char-a" class="char" value="a" checked>
     <label for="char-a">A</label>
     <input name="currentVowel" type="radio" id="char-i" class="char" value="i">
@@ -64,12 +76,6 @@
     <label for="char-e">E</label>
     <input name="currentVowel" type="radio" id="char-o" class="char" value="o">
     <label for="char-o">O</label>
-
-    <!-- <div id="char-a" class="char result">A</div>
-      <div id="char-i" class="char result">I</div>
-      <div id="char-u" class="char result">U</div>
-      <div id="char-e" class="char result">E</div>
-      <div id="char-o" class="char result">O</div> -->
   </div>
 
   <div class="main-wrapper">
@@ -230,80 +236,15 @@
         </div>
       </div>
 
-      <!-- old version
-    <div class="main-wrapper">
-      <div class="wrapper consonants">
-        <div class="flex consonants">
-          <div>
-            <button value="a">あ</button>
-          </div>
-          <div>
-            <button value="k">か</button>
-            <div>
-              <button class="small" value="g">が</button>
-              <button class="small" value="ky">きゃ</button>
-              <button class="small" value="gy">ぎゃ</button>
-            </div>
-          </div>
-          <div>
-            <button value="s">さ</button>
-            <div>
-              <button class="small" value="z">ざ</button>
-              <button class="small" value="sy">しゃ</button>
-              <button class="small" value="jy">じゃ</button>
-            </div>
-          </div>
-          <div>
-            <button value="t">た</button>
-            <div>
-              <button class="small" value="d">だ</button>
-            </div>
-          </div>
-          <div>
-            <button value="n">な</button>
-            <div>
-              <button class="small" value="ny">にゃ</button>
-            </div>
-          </div>
-        </div>
-        <div class="flex consonants">
-          <div>
-            <button value="h">は</button>
-            <div>
-              <button class="small" value="hy">ひゃ</button>
-              <button class="small" value="b">ば</button>
-              <button class="small" value="by">びゃ</button>
-              <button class="small" value="p">ぱ</button>
-              <button class="small" value="py">ぴゃ</button>
-            </div>
-          </div>
-          <div>
-            <button value="m">ま</button>
-            <div>
-              <button class="small" value="my">みゃ</button>
-            </div>
-          </div>
-          <div>
-            <button value="y">や</button>
-          </div>
-          <div>
-            <button value="r">ら</button>
-            <div>
-              <button class="small" value="ry">りゃ</button>
-            </div>
-          </div>
-          <div>
-            <button value="w">わ</button>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
   <div id="debug-component" class="video-component hidden">
     <div style="position: relative" id="video-wrapper" class="video">
       <!-- below video and canvas elements will programmicaly injected here -->
-      <!-- <video id="inputVideo" muted playsinline></video>
-          <canvas id="overlay" /> -->
+      <!--
+        <video id="inputVideo" muted playsinline></video>
+        <canvas id="overlay" /> 
+      -->
     </div>
     <div id="debug-log">
       <label>mouthOpen</label>
@@ -333,14 +274,10 @@
       <input id="outerLipsRhombusWithRatio" style="font-size: 15px;">
       <label>swipeSensitivity:
         <a id="reset-sensitivity-btn" href="javascript:void(0);">Reset</a>
-
       </label>
       <p class="range-field">
-        
         <input type="range" id="swipe-sensitivity" min="10" max="200" step="10"/>
       </p>
     </div>
-
 </body>
-
 </html>
