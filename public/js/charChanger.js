@@ -1,3 +1,4 @@
+// Japanese
 const a = "あ い う え お".split(" ");
 const k = "か き く け こ".split(" ");
 const ky = "きゃ  きゅ  きょ".split(" ");
@@ -27,6 +28,7 @@ const r = "ら り る れ ろ".split(" ");
 const ry = "りゃ  りゅ  りょ".split(" ");
 const w = "わ  ん  を".split(" ");
 
+// Roman letters
 const a_en = "a i u e o".split(" ");
 const k_en = "ka ki ku ke ko".split(" ");
 const ky_en = "kya  kyu  kyo".split(" ");
@@ -177,8 +179,7 @@ function handleClickEvent(target) {
 }
 
 
-// play sound
-
+//// play sound
 window.addEventListener('load', () => {
   // loadAllSounds(); //Hawler
   loadAllSoundsToneWithPlayers(); //Tone.js
@@ -201,7 +202,7 @@ window.addEventListener('load', () => {
 //   }
 // }
 
-// Tone.js
+// Tone.js version
 let toneObj = {};
 const pitchShift = new Tone.PitchShift().toDestination();//toMaster();
 let tonePlayers;

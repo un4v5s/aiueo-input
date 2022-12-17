@@ -37,17 +37,17 @@ body {
 }
 
 /* sounds loader */
-#sounds-loader-overlay{
+#sounds-loader-overlay {
   width: 100vw;
   height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
 }
 
-#sounds-loader-overlay .preloader-wrapper{
+#sounds-loader-overlay .preloader-wrapper {
   position: relative;
   width: 100px;
   height: 100px;
@@ -55,7 +55,7 @@ body {
   top: calc(50vh - 50px);
 }
 
-#sounds-loader-overlay .sounds-loading-message{
+#sounds-loader-overlay .sounds-loading-message {
   position: absolute;
   text-align: center;
   width: 300px;
@@ -64,7 +64,6 @@ body {
   font-size: 2rem;
   color: lightgray;
 }
-
 
 /* progress bar */
 
@@ -94,7 +93,6 @@ body {
 
 .header-menu a {
   pointer-events: all;
-
 }
 
 .btn-large {
@@ -298,7 +296,23 @@ body {
 }
 
 .video-component {
+  margin-top: 36px;
   max-width: 250px;
+}
+
+#video-wrapper {
+  max-width: 250px;
+  height: 187.5px;
+}
+
+/* hide face for demo */
+.hide-vide-div {
+  display: none;
+  /* background-color: black;
+  width: 250px;
+  height: 187.5px;
+  position: absolute;
+  top: 0; */
 }
 
 #debug-component input:not([type]) {
@@ -325,15 +339,16 @@ body {
   margin: 0;
 }
 
-.range-field #swipe-sensitivity{
+.range-field #swipe-sensitivity {
   border: none;
 }
 
-/* Portrait */
+/* Smartphone Portrait */
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
-  body{
+  body {
     margin-top: 40px !important;
   }
+
   .aks-title {
     font-family: 'Lalezar';
     text-align: center;

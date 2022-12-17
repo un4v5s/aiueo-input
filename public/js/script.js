@@ -134,6 +134,10 @@ window.addEventListener("load", () => {
   video.setAttribute('playsinline', '');
   document.getElementById("video-wrapper").appendChild(video);
 
+  const hideVideoDiv = document.createElement("div"); 
+  hideVideoDiv.className = "hide-vide-div";
+  document.getElementById("video-wrapper").appendChild(hideVideoDiv);
+
   const canvas = document.createElement("canvas"); 
   canvas.setAttribute('id', 'overlay');
   document.getElementById("video-wrapper").appendChild(canvas);
@@ -206,8 +210,9 @@ function detectVowel(resizedResult){
     resultVowelJp = "う"
     resultVowel = "u";
 
-  // happyは「い」「え」
+  // happy: i, e
   } else if (highestExpression == "happy") {
+    // judge i or e with vertical distance of mouth
     if (innerLipsOpenDistWithRatio < 0.17) {
       resultVowelJp = "い";
       resultVowel = "i";
@@ -216,9 +221,9 @@ function detectVowel(resizedResult){
       resultVowel = "e";
     }
 
-  // surprisedは「あ」「お」
+  // surprised: a, o
   } else if (highestExpression == "surprised") {
-    // 「あ」「う」の判断は唇上下中央、唇左右端の4点をひし形として計算。（対角線 * 対角線 / 2）
+    // judge a or u with multiply vertical and horizontal length of mouth
     if (innerLipsOpenDistWithRatio >= 0.2) {
       resultVowelJp = "あ";
       resultVowel = "a";
@@ -227,7 +232,7 @@ function detectVowel(resizedResult){
       resultVowel = "o";
     }
 
-  // mouseOpenでneutralは「お」
+  // mouseOpen and neutral: o
   } else {
     resultVowelJp = "お";
     resultVowel = "o";
@@ -239,44 +244,7 @@ function detectVowel(resizedResult){
     document.getElementById(`char-${resultVowel}`).click();
   }
 
-  // old 20221210 16:35
-  // if (mouthOpen && expressions.surprised > 0.80) {
-  //   // 「あ」「う」の判断は唇上下中央、唇左右端の4点をひし形として計算。（対角線 * 対角線 / 2）
-  //   // if (outerLipsRhombusWithRatio > 25) {
-  //   //   // console.log("あ");
-  //   //   document.getElementById("result").innerText = "あ";
-  //   //   changeKeyTop("a");
-
-  //   // } else {
-  //     // console.log("お");
-  //     document.getElementById("result").innerText = "お";
-  //     changeKeyTop("o");
-
-  //   // }
-  // } else if (mouthOpen && expressions.happy > 0.80) {
-  //   if (innerLipsOpenDist / eyeOuterWidthDist < 0.20) {
-  //     // console.log("い");
-  //     document.getElementById("result").innerText = "い";
-  //     changeKeyTop("i");
-
-  //   } else {
-  //     // console.log("え");
-  //     document.getElementById("result").innerText = "え";
-  //     changeKeyTop("e");
-
-  //   }
-  // }else if(!mouthOpen){
-  //   // console.log("う");
-  //   document.getElementById("result").innerText = "う";
-  //   changeKeyTop("u");
-
-  // } else {
-  //   document.getElementById("result").innerText = "あ";
-  //   changeKeyTop("a");
-
-  // }
-
-  // define number index
+  // draw point number indecies for test
   // rightEye.forEach((point,idx) => {
   //   // context.fillText(idx, point.x, point.y, 5)
   // })
@@ -315,18 +283,15 @@ window.addEventListener("load", () => {
 
 // change current vowel with swipe
 function setSwipe() {
-  // let t = document.querySelector(".swipearea-overlay");
   let t = document.querySelector(".swipearea-overlay");
-  // console.log("t: ", t);
   let aiueo = "a i u e o".split(" ");
-  let startX, startY;		// タッチ開始 x, y座標
-  let moveX, moveY;	// スワイプ中の x, y座標
+  let startX, startY;
+  let moveX, moveY;
   let tmpCurrentVowel = '', tmpIdx;
-  sensitivity = document.getElementById("swipe-sensitivity").value; // default 50 スワイプを感知する最低距離（ピクセル単位）
+  sensitivity = document.getElementById("swipe-sensitivity").value; // default 50
   // console.log("sensitivity: ", sensitivity);
   
-  ///// マウス
-  // タッチ開始時： xy座標を取得
+  ///// mouse
   t.addEventListener("mousedown", function(e) {
     e.preventDefault();
     startX = e.pageX;
@@ -336,7 +301,6 @@ function setSwipe() {
     // console.log("tmpCurrentVowel: ", tmpCurrentVowel);
     // console.log("tmpIdx: ", tmpIdx);
 
-    // マウスクリックしながら移動中： xy座標を取得
     t.onmousemove = (n) => {
       n.preventDefault();
       moveX = n.pageX;
@@ -345,13 +309,11 @@ function setSwipe() {
     }
   });
   
-  // マウスアップ： イベントを削除
   t.addEventListener("mouseup", function(e) {
     t.onmousemove = null;
   });
 
-  /// タッチ
-  // タッチ開始時： xy座標を取得
+  /// touch
   t.addEventListener("touchstart", function(e) {
     e.preventDefault();
     startX = e.touches[0].pageX;
@@ -359,7 +321,6 @@ function setSwipe() {
     tmpCurrentVowel = document.querySelector('input[name="currentVowel"]:checked').value;
     tmpIdx = aiueo.indexOf(tmpCurrentVowel);
 
-    // スワイプ中： xy座標を取得
     t.ontouchmove = (n) => {
       n.preventDefault();
       moveX = n.changedTouches[0].pageX;
@@ -368,7 +329,6 @@ function setSwipe() {
     }
   });
   
-  // タッチ終了時： イベントを削除
   t.addEventListener("touchend", function(e) {
     t.ontouchmove = null;
   });
