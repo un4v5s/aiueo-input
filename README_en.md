@@ -12,6 +12,22 @@ In order to communicate with users who have difficulty speaking due to various c
 
 <br>
 
+## Demo
+
+### 1. Demo in action
+
+[https://aiueo-input.onrender.com/](https://aiueo-input.onrender.com/)
+
+Note: It takes about 30 seconds to start up because we are using the free plan of [Render](https://render.com/).
+
+### 2. Youtube動画
+
+[Link](https://www.youtube.com/watch?v=0j6MAr7HJhk)
+
+[![aiueo-input demo](https://i.gyazo.com/77b2a14169f4490ac782ccae7d6ab60a.gif)](https://www.youtube.com/watch?v=0j6MAr7HJhk)
+
+<br>
+
 ## Background
 
 ### Expected User
@@ -77,14 +93,6 @@ I use [Tone.js](https://github.com/Tonejs/Tone.js)
 I found that HTML5 audio has a delay in audio playback on iOS devices, so we adopted [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
 Later, I found that the Web Audio API's playbackRate could not preserve the pitch, so I use Tone.js and pitchShift.
-
-<br>
-
-## Demo
-
-YouTube link below:
-
-[![aiueo-input demo](https://img.youtube.com/vi/0j6MAr7HJhk/0.jpg)](https://www.youtube.com/watch?v=0j6MAr7HJhk)
 
 <br>
 

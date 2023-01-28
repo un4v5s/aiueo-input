@@ -12,6 +12,22 @@ aiueo-input
 
 <br>
 
+## デモ
+
+### 1. 実際に動くデモ 
+
+[https://aiueo-input.onrender.com/](https://aiueo-input.onrender.com/)
+
+※[Render](https://render.com/)の無料プランにて運用している為、起動に30秒程掛かります
+
+### 2. Youtube動画
+
+[リンク](https://www.youtube.com/watch?v=0j6MAr7HJhk)
+
+[![aiueo-input demo](https://i.gyazo.com/77b2a14169f4490ac782ccae7d6ab60a.gif)](https://www.youtube.com/watch?v=0j6MAr7HJhk)
+
+<br>
+
 ## 背景（開発のきっかけ）
 
 ### 想定ユーザー
@@ -76,14 +92,6 @@ aiueo-input
 HTML5 audioはiOS端末での音声再生に遅延があることがわかり、[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)を採用した。
 
 Web audioのplaybackRateは、ピッチを維持できないことがわかり、pitchShiftを利用するためにTone.jsを採用した。
-
-<br>
-
-## デモ
-
-Youtube:
-
-[![aiueo-input demo](https://img.youtube.com/vi/0j6MAr7HJhk/0.jpg)](https://www.youtube.com/watch?v=0j6MAr7HJhk)
 
 <br>
 
@@ -160,7 +168,8 @@ if (!mouthOpen) {
 ## 課題
 
 - [ ] 母音判別精度の向上
-- [ ] 大画面でのフリック入力と予測変換とかで作った方が、実際のコミュニケーションとして使えるものになる気がする。
+- [ ] 大画面でのフリック入力と予測変換とかで作った方が、実際のコミュニケーションとして使えるものになる気がする
+- [ ] とりあえず早く作るためにExpressで作ったが、Nextなどでリッチに作り直したい（いつか）
 
 <br>
 
