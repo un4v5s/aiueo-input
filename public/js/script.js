@@ -9,9 +9,9 @@ let stopFlag = false;
 async function onPlay() {
   const video = document.getElementById("inputVideo");
 
-  if (video.paused || video.ended || !isFaceDetectionModelLoaded()){
-  // if (video.ended || !isFaceDetectionModelLoaded()){ 
-    if(video.ended){
+  if (video.paused || video.ended || !isFaceDetectionModelLoaded()) {
+    // if (video.ended || !isFaceDetectionModelLoaded()){
+    if (video.ended) {
       console.log("video.ended is true, so clearInterval()");
       clearInterval(intervalId);
       stopFlag = true;
@@ -20,7 +20,7 @@ async function onPlay() {
   }
 
   // hide spinner and start progress bar
-  if(streaming==false){
+  if (streaming == false) {
     toggleStopBtnSpinner(false);
     toggleProgressBar(true);
     streaming = true;
@@ -35,13 +35,13 @@ async function onPlay() {
   // const landmarks = await faceapi.detectFaceLandmarks(video)
 
   if (result) {
-    if(canvas!=null){
+    if (canvas != null) {
       const dims = faceapi.matchDimensions(canvas, video, true);
       const resizedResult = faceapi.resizeResults(result, dims);
 
       const minConfidence = 0.05;
-      faceapi.draw.drawDetections(canvas, resizedResult)
-      faceapi.draw.drawFaceExpressions(canvas, resizedResult, minConfidence)
+      faceapi.draw.drawDetections(canvas, resizedResult);
+      faceapi.draw.drawFaceExpressions(canvas, resizedResult, minConfidence);
       faceapi.draw.drawFaceLandmarks(canvas, resizedResult);
     }
 
@@ -65,9 +65,9 @@ async function start() {
 
   // try to access users webcam and stream the images to the video element
   const opt = {
-    video: { 
+    video: {
       frameRate: { ideal: 5, max: 15 },
-      facingMode: "user"
+      facingMode: "user",
     },
     audio: false,
   };
@@ -78,9 +78,9 @@ async function start() {
   return new Promise((resolve) => {
     video.onloadedmetadata = () => {
       console.log("onloadedmetadata");
-      if(stopFlag==false){
+      if (stopFlag == false) {
         video.play();
-        intervalId = setInterval(() => onPlay(), 200)
+        intervalId = setInterval(() => onPlay(), 200);
         console.log("intervalId: ", intervalId);
       }
       resolve();
@@ -88,32 +88,34 @@ async function start() {
   });
 }
 
-function toggleDebugMode(){
-  notDebugMode = document.getElementById("debug-component").classList.toggle("hidden");
+function toggleDebugMode() {
+  notDebugMode = document
+    .getElementById("debug-component")
+    .classList.toggle("hidden");
   canvas = notDebugMode ? null : document.getElementById("overlay");
 }
 
-function toggleStartStopBtn(isRunning){
+function toggleStartStopBtn(isRunning) {
   const startBtn = document.getElementById("start-btn");
   const stopBtn = document.getElementById("stop-btn");
   startBtn.classList.toggle("hidden", isRunning);
   stopBtn.classList.toggle("hidden", !isRunning);
 }
 
-function toggleStopBtnSpinner(bool){
+function toggleStopBtnSpinner(bool) {
   const spinner = document.querySelector(".preloader-wrapper.small");
   spinner.classList.toggle("active", bool);
   spinner.classList.toggle("hidden", !bool);
-  spinner.nextElementSibling.innerText = bool ? "" : "STOP"; //stop button  
+  spinner.nextElementSibling.innerText = bool ? "" : "STOP"; //stop button
 }
 
-function toggleProgressBar(bool){
+function toggleProgressBar(bool) {
   const runningLoader = document.getElementById("running-loader");
   runningLoader.classList.toggle("hidden", !bool);
 }
 
 async function stop() {
-  console.log("stop()")
+  console.log("stop()");
   stopFlag = true;
   toggleStartStopBtn(false);
   // toggleStopBtnSpinner(false); // already run when stream started
@@ -121,40 +123,42 @@ async function stop() {
 
   const video = document.getElementById("inputVideo");
   window.localStream?.getVideoTracks()?.[0].stop();
-  video.src = '';
+  video.src = "";
   streaming = false;
 }
 
 window.addEventListener("load", () => {
   // programmatically add video and canvas element
-  const video = document.createElement("video"); 
-  video.setAttribute('id', 'inputVideo');
+  const video = document.createElement("video");
+  video.setAttribute("id", "inputVideo");
   // video.setAttribute('autoplay', ''); // autoplay auto pause video when element hidden
-  video.setAttribute('muted', '');
-  video.setAttribute('playsinline', '');
+  video.setAttribute("muted", "");
+  video.setAttribute("playsinline", "");
   document.getElementById("video-wrapper").appendChild(video);
 
-  const hideVideoDiv = document.createElement("div"); 
+  const hideVideoDiv = document.createElement("div");
   hideVideoDiv.className = "hide-vide-div";
   document.getElementById("video-wrapper").appendChild(hideVideoDiv);
 
-  const canvas = document.createElement("canvas"); 
-  canvas.setAttribute('id', 'overlay');
+  const canvas = document.createElement("canvas");
+  canvas.setAttribute("id", "overlay");
   document.getElementById("video-wrapper").appendChild(canvas);
 
   // add swipe events
   setSwipe();
 });
 
-
-function detectVowel(resizedResult){
+function detectVowel(resizedResult) {
   // const landmarkPositions = resizedResult.landmarks.positions;
   const expressions = resizedResult.expressions;
   const highestExpression = Object.keys(expressions).reduce((a, b) =>
     expressions[a] > expressions[b] ? a : b
   );
   document.getElementById("highestExpression").value = highestExpression;
-  document.getElementById("surprised").value = _.round(expressions.surprised, 2);
+  document.getElementById("surprised").value = _.round(
+    expressions.surprised,
+    2
+  );
   document.getElementById("happy").value = _.round(expressions.happy, 2);
 
   const mouth = resizedResult.landmarks.getMouth();
@@ -186,7 +190,7 @@ function detectVowel(resizedResult){
   const outerLipsOpenDistWithRatio = outerLipsOpenDist / eyeOuterWidthDist;
   const mouthOpen = innerLipsOpenDistWithRatio > 0.1;
 
-  document.getElementById("lipsOuterWidthDist-eyeOuterWidthDist").value = 
+  document.getElementById("lipsOuterWidthDist-eyeOuterWidthDist").value =
     _.round(lipsOuterWidthDist / eyeOuterWidthDist, 2);
 
   const outerLipsRhombus = outerLipsOpenDist * lipsOuterWidthDist; //rhombus = ひし形 外唇
@@ -196,21 +200,33 @@ function detectVowel(resizedResult){
   document.getElementById("mouthOpen").value = mouthOpen;
   // document.getElementById("innerLipsOpenDist").value = _.round(innerLipsOpenDist, 2);
   // document.getElementById("outerLipsOpenDist").value = _.round(outerLipsOpenDist, 2);
-  document.getElementById("innerLipsOpenDistWithRatio").value = _.round(innerLipsOpenDistWithRatio, 2);
-  document.getElementById("outerLipsOpenDistWithRatio").value = _.round(outerLipsOpenDistWithRatio, 2);
+  document.getElementById("innerLipsOpenDistWithRatio").value = _.round(
+    innerLipsOpenDistWithRatio,
+    2
+  );
+  document.getElementById("outerLipsOpenDistWithRatio").value = _.round(
+    outerLipsOpenDistWithRatio,
+    2
+  );
 
   if (mouthOpen) {
-    document.getElementById("outerLipsRhombusWithRatio").value = _.round(outerLipsRhombusWithRatio, 2);
+    document.getElementById("outerLipsRhombusWithRatio").value = _.round(
+      outerLipsRhombusWithRatio,
+      2
+    );
   }
 
-  let resultVowel = "", resultVowelJp = "";
-  const currentVowel = document.querySelector('input[name="currentVowel"]:checked').value;
+  let resultVowel = "",
+    resultVowelJp = "";
+  const currentVowel = document.querySelector(
+    'input[name="currentVowel"]:checked'
+  ).value;
 
   if (!mouthOpen) {
-    resultVowelJp = "う"
+    resultVowelJp = "う";
     resultVowel = "u";
 
-  // happy: i, e
+    // happy: i, e
   } else if (highestExpression == "happy") {
     // judge i or e with vertical distance of mouth
     if (innerLipsOpenDistWithRatio < 0.17) {
@@ -221,7 +237,7 @@ function detectVowel(resizedResult){
       resultVowel = "e";
     }
 
-  // surprised: a, o
+    // surprised: a, o
   } else if (highestExpression == "surprised") {
     // judge a or u with multiply vertical and horizontal length of mouth
     if (innerLipsOpenDistWithRatio >= 0.2) {
@@ -232,14 +248,14 @@ function detectVowel(resizedResult){
       resultVowel = "o";
     }
 
-  // mouseOpen and neutral: o
+    // mouseOpen and neutral: o
   } else {
     resultVowelJp = "お";
     resultVowel = "o";
   }
 
   // console.log("resultVowelJp: ", resultVowelJp);
-  if(currentVowel!=resultVowelJp){
+  if (currentVowel != resultVowelJp) {
     changeKeyTop(resultVowel);
     document.getElementById(`char-${resultVowel}`).click();
   }
@@ -261,11 +277,11 @@ window.addEventListener("load", () => {
   // get or set sensitivity from localStorage
   const sensitivityElm = document.getElementById("swipe-sensitivity");
   sensitivityElm.addEventListener("change", (evt) => {
-    localStorage.setItem('sensitivity', evt.target.value);
+    localStorage.setItem("sensitivity", evt.target.value);
     sensitivity = evt.target.value;
-  })
+  });
   const lsSensitivity = localStorage.getItem("sensitivity");
-  if(lsSensitivity==null){
+  if (lsSensitivity == null) {
     localStorage.setItem("sensitivity", "50");
     lsSensitivity = 50;
   }
@@ -275,11 +291,11 @@ window.addEventListener("load", () => {
   // add reset button event
   const resetSensitivityBtn = document.getElementById("reset-sensitivity-btn");
   resetSensitivityBtn.addEventListener("click", () => {
-    localStorage.setItem('sensitivity', "50");
+    localStorage.setItem("sensitivity", "50");
     sensitivityElm.value = 50;
     sensitivity = 50;
-  })
-})
+  });
+});
 
 // change current vowel with swipe
 function setSwipe() {
@@ -287,16 +303,19 @@ function setSwipe() {
   let aiueo = "a i u e o".split(" ");
   let startX, startY;
   let moveX, moveY;
-  let tmpCurrentVowel = '', tmpIdx;
+  let tmpCurrentVowel = "",
+    tmpIdx;
   sensitivity = document.getElementById("swipe-sensitivity").value; // default 50
   // console.log("sensitivity: ", sensitivity);
-  
+
   ///// mouse
-  t.addEventListener("mousedown", function(e) {
+  t.addEventListener("mousedown", function (e) {
     e.preventDefault();
     startX = e.pageX;
     startY = e.pageY;
-    tmpCurrentVowel = document.querySelector('input[name="currentVowel"]:checked').value;
+    tmpCurrentVowel = document.querySelector(
+      'input[name="currentVowel"]:checked'
+    ).value;
     tmpIdx = aiueo.indexOf(tmpCurrentVowel);
     // console.log("tmpCurrentVowel: ", tmpCurrentVowel);
     // console.log("tmpIdx: ", tmpIdx);
@@ -306,19 +325,21 @@ function setSwipe() {
       moveX = n.pageX;
       moveY = n.pageY;
       onMove(moveX, startX, "mouse");
-    }
+    };
   });
-  
-  t.addEventListener("mouseup", function(e) {
+
+  t.addEventListener("mouseup", function (e) {
     t.onmousemove = null;
   });
 
   /// touch
-  t.addEventListener("touchstart", function(e) {
+  t.addEventListener("touchstart", function (e) {
     e.preventDefault();
     startX = e.touches[0].pageX;
     startY = e.touches[0].pageY;
-    tmpCurrentVowel = document.querySelector('input[name="currentVowel"]:checked').value;
+    tmpCurrentVowel = document.querySelector(
+      'input[name="currentVowel"]:checked'
+    ).value;
     tmpIdx = aiueo.indexOf(tmpCurrentVowel);
 
     t.ontouchmove = (n) => {
@@ -326,23 +347,25 @@ function setSwipe() {
       moveX = n.changedTouches[0].pageX;
       moveY = n.changedTouches[0].pageY;
       onMove(moveX, startX, "touch");
-    }
+    };
   });
-  
-  t.addEventListener("touchend", function(e) {
+
+  t.addEventListener("touchend", function (e) {
     t.ontouchmove = null;
   });
 
-  function onMove(moveX, startX, type){
+  function onMove(moveX, startX, type) {
     const dist = moveX - startX;
     const distNum = Math.floor(dist / sensitivity);
     const newIdx = Math.min(Math.max(tmpIdx + distNum, 0), 4); // min 0 to max 5
-    const currentCheckedVowel = document.querySelector('input[name="currentVowel"]:checked').value;
+    const currentCheckedVowel = document.querySelector(
+      'input[name="currentVowel"]:checked'
+    ).value;
     const currentIdx = aiueo.indexOf(currentCheckedVowel);
-    if(newIdx!=currentIdx){
+    if (newIdx != currentIdx) {
       console.log("type: ", type);
       // console.log("currentVowel change")
       document.querySelectorAll(".char")[newIdx].click();
     }
-  };
+  }
 }
